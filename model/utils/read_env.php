@@ -1,6 +1,6 @@
 <?php
 
-$envFilePath = __DIR__ . '/../../.env';
+$envFilePath = __DIR__ . '/../../dev.env';
 
 if (file_exists($envFilePath)) {
 
@@ -32,7 +32,8 @@ if (file_exists($envFilePath)) {
     $password = $_ENV['DB_PASSWORD']; // Mot de passe MySQL
     $database = $_ENV['DB_NAME']; // Nom de la base de données
     $port = $_ENV['PORT'];
-    $wh = $_ENV['WH'];
+    $wh = $_ENV['WH_STRIPE']; //use if Stripe APi
+    $stripe = $_ENV['STRIPE'];//use if wh Stripe Api
 } else {
     // Gérez le cas où le fichier .env n'existe pas
     encodeError("Le fichier .env n'a pas été trouvé.");

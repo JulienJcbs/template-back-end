@@ -43,3 +43,25 @@ function verifyStrlen($str, $min, $max)
 {
     return strlen($str) >= $min && strlen($str) <= $max;
 }
+
+function verifyExisteRow($pdo, $tableName, $columnName, $value)
+{
+    $sql = "SELECT COUNT(*) as nb FROM $tableName WHERE $columnName = :value";
+    $req = $pdo->prepare($sql);
+    $req->execute(['value' => $value]);
+    return $req->fetch()['nb'] > 0;
+}
+
+
+function verifyRegex($pattern, $str)
+{
+    return preg_match($pattern, $str);
+}
+
+function timeIsPassed($timeStamp)
+{
+    $date = DateTime::createFromFormat('Y-m-d H:i:s', $timeStamp);
+    $now = new DateTime();
+
+    return $date < $now;
+}
