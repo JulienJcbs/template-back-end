@@ -136,3 +136,17 @@ function getEventByIdForAdmin($pdo)
 {
     Event::getEventByIdForAdmin($pdo, $_POST['adminId'], $_POST['eventId']);
 }
+
+function getMessages($pdo)
+{
+    Message::getMessages($pdo, $_POST['adminId']);
+}
+
+function updateEventVisibility($pdo)
+{
+    Event::updateEventVisibility($pdo, $_POST['adminId'], $_POST['eventId'], $_POST['visibility']);
+}
+
+function getEventsForAdmin($pdo){
+    Event::getEventsForAdmin($pdo, $_POST['adminId']);
+}

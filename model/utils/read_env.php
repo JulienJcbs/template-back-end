@@ -1,6 +1,6 @@
 <?php
 
-$envFilePath = __DIR__ . '/../../dev.env';
+$envFilePath = __DIR__ . '/../../.env';
 
 if (file_exists($envFilePath)) {
 

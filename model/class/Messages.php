@@ -38,4 +38,18 @@ class Message
         return encodeSuccess($questId);
         return true;
     }
+
+    static function getMessages($pdo, $adminId)
+    {
+        if (!Admin::verifyAdminExiste($pdo, $adminId)) {
+            encodeError('Accès refusé.');
+            return false;
+        }
+
+        $req = $pdo->prepare('SELECT * FROM messages;');
+        $req->execute();
+
+        encodeSuccess($req->fetchAll());
+        return true;
+    }
 }

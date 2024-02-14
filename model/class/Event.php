@@ -52,6 +52,12 @@ class Event
 
         $event = Event::getEventById($pdo, $eventId);
 
+        $placesRegular = Event::getPlaces($pdo, $eventId, 'regular');
+        $placesVip = Event::getPlaces($pdo, $eventId, 'vip');
+
+        $event['p_reg'] = $placesRegular;
+        $event['p_vip'] = $placesVip;
+
         encodeSuccess($event);
         return true;
     }
@@ -61,10 +67,10 @@ class Event
         $event = Event::getEventById($pdo, $eventId);
 
         if ($type == 'vip') {
-            return ($event['nb_persons_regular'] - Event::getReservations($pdo, $eventId, $type));
+            return ($event['nb_persons_vip'] - Event::getReservations($pdo, $eventId, $type));
         }
         if ($type == 'regular') {
-            return ($event['nb_persons_vip'] - Event::getReservations($pdo, $eventId, $type));
+            return ($event['nb_persons_regular'] - Event::getReservations($pdo, $eventId, $type));
         }
         return false;
     }
@@ -211,5 +217,42 @@ class Event
             return true;
         }
         return false;
+    }
+
+    public static function updateEventVisibility($pdo, $adminId, $eventId, $visibility)
+    {
+        if (!Admin::verifyAdminExiste($pdo, $adminId)) {
+            encodeError('Accès réfusé.');
+            return false;
+        }
+
+        if (!verifyExisteRow($pdo, 'events', 'id', $eventId)) {
+            encodeError('Cet évènement n\'existe pas.');
+            return false;
+        }
+
+        $req = $pdo->prepare("UPDATE events SET visible = :visible WHERE id = :id");
+        $req->execute([
+            'id' => $eventId,
+            'visible' => $visibility,
+        ]);
+
+        encodeSuccess(true);
+        return true;
+    }
+
+    static function getEventsForAdmin($pdo, $adminId)
+    {
+        if (!Admin::verifyAdminExiste($pdo, $adminId)) {
+            encodeError('Accès réfusé.');
+            return false;
+        }
+
+        $req = $pdo->prepare('SELECT * FROM events');
+
+        $req->execute();
+
+        encodeSuccess($req->fetchAll());
+        return true;
     }
 }

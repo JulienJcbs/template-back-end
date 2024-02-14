@@ -120,8 +120,17 @@ switch ($path) {
     case '/admin/getEventById':
         getEventByIdForAdmin($pdo);
         break;
+    case '/admin/getEvents':
+        getEventsForAdmin($pdo);
+        break;
     case '/webhook':
         webhook($pdo, $wh);
+        break;
+    case '/admin/getMessages':
+        getMessages($pdo);
+        break;
+    case '/admin/updateEventVisibility':
+        updateEventVisibility($pdo);
         break;
     default:
         http_response_code(404);
