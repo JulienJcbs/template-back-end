@@ -51,6 +51,9 @@ switch ($path) {
     case '/user/getEvents':
         getEvents($pdo);
         break;
+    case '/user/getBackgroundImage':
+        getBackgroundImageByRoute($pdo);
+        break;
     case '/user/getEventById':
         getEventById($pdo);
         break;

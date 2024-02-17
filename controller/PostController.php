@@ -147,6 +147,12 @@ function updateEventVisibility($pdo)
     Event::updateEventVisibility($pdo, $_POST['adminId'], $_POST['eventId'], $_POST['visibility']);
 }
 
-function getEventsForAdmin($pdo){
+function getEventsForAdmin($pdo)
+{
     Event::getEventsForAdmin($pdo, $_POST['adminId']);
+}
+
+function getBackgroundImageByRoute($pdo)
+{
+    Images::getBackgroundImagesByRoute($pdo, $_GET['route']);
 }
